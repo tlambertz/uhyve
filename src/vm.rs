@@ -570,7 +570,13 @@ pub trait Vm {
 								freqinfo.processor_base_frequency() as u32,
 							);
 						}
-						None => info!("Unable to determine processor frequency!"),
+						None => {
+							info!("Unable to determine processor frequency! Assuming 1000");
+							write_volatile(
+								&mut (*boot_info).cpu_freq,
+								1000 as u32,
+							);
+						},
 					}
 				}
 
